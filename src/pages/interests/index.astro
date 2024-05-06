@@ -7,7 +7,7 @@ import { getCollection } from 'astro:content'
 import FormattedDate from '../../components/FormattedDate.astro'
 import SlideInNav from '../../components/SlideInNav.astro'
 
-const posts = (await getCollection('talk')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+const posts = (await getCollection('interests')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
 ---
 
 <!doctype html>
@@ -24,7 +24,7 @@ const posts = (await getCollection('talk')).sort((a, b) => a.data.pubDate.valueO
           {
             posts.map((post) => (
               <li class='pb-16'>
-                <a href={`/talks/${post.slug}/`}>
+                <a href={`/interests/${post.slug}/`}>
                   {/* <img width={720} height={360} src={post.data.heroImage} alt="" /> */}
                   <div class='text-gray-500 text-sm mb-1'>
                     <FormattedDate date={post.data.pubDate} />
