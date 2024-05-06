@@ -1,0 +1,64 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
+
+interface Props {
+  propValue: number
+}
+
+const { propValue = 100 } = Astro.props
+---
+
+<div id='header' class='bg-white fixed w-full z-10 top-0 hidden animated' style='opacity: .95;'>
+  <div class='bg-white py-2 px-1'>
+    <div class='flex flex-wrap items-center content-center'>
+      <div class='flex w-1/2 justify-start text-white '>
+        <a class='flex text-gray-700   no-underline hover:text-gray-900 hover:no-underline pl-2' href='/'>
+          <span class="text-xl font-bold">
+          {SITE_TITLE}
+          </span>
+          <span class="text-sm text-gray-500 ml-2 pt-1">{SITE_DESCRIPTION}</span>
+        </a>
+      </div>
+      <div class='flex w-1/2 justify-end content-center'>
+        &nbsp;
+      </div>
+    </div>
+  </div>
+  <!--Progress bar-->
+  <div
+    id='progress'
+    class='h-[1px] bg-white'
+    style='background:linear-gradient(to right, #666666 var(--scroll), transparent 0);'
+  >
+  </div>
+</div>
+
+<script is:inline define:vars={{ propValue }}>
+  var h = document.documentElement,
+    b = document.body,
+    st = 'scrollTop',
+    sh = 'scrollHeight',
+    progress = document.querySelector('#progress'),
+    scroll
+  var scrollpos = window.scrollY
+  var header = document.getElementById('header')
+
+  document.addEventListener('scroll', function () {
+    /*Refresh scroll % width*/
+    scroll = ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100
+    progress.style.setProperty('--scroll', scroll + '%')
+
+    /*Apply classes for slide in bar*/
+    scrollpos = window.scrollY
+
+    if (scrollpos > propValue) {
+      header.classList.remove('hidden')
+      header.classList.remove('fadeOutUp')
+      header.classList.add('slideInDown')
+    } else {
+      header.classList.remove('slideInDown')
+      header.classList.add('fadeOutUp')
+      header.classList.add('hidden')
+    }
+  })
+</script>
